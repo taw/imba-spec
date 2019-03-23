@@ -1,0 +1,17 @@
+#!/usr/bin/env imba
+
+let path = require "path"
+let fs = require "fs"
+
+class TestRunner
+  def run
+    # Ignore args for now
+    let args = process:argv
+    let spec-files = fs.readdirSync("spec").filter do |path|
+      path.ends-with(".imba")
+
+    # Right now it just runs them all instantly, which is quite silly, but we need to start somewhere
+    for path in spec-files
+      require("{process.cwd}/spec/{path.slice(0,-5)}")
+
+TestRunner.new.run

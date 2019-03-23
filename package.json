@@ -1,0 +1,34 @@
+{
+  "name": "imba-spec",
+  "version": "0.0.1",
+  "description": "Test framework for Imba",
+  "main": "./src/index",
+  "bin": {
+    "imba-spec": "./bin/imba-spec"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taw/imba-spec.git"
+  },
+  "keywords": [
+    "imba",
+    "testing",
+    "test"
+  ],
+  "author": "Tomasz Wegrzanowski <Tomasz.Wegrzanowski@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taw/imba-spec/issues"
+  },
+  "homepage": "https://github.com/taw/imba-spec#readme",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "fast-equals": "^1.6.2"
+  },
+  "devDependencies": {
+    "imba": "^1.4.2"
+  }
+}
