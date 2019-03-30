@@ -1,13 +1,13 @@
 # This is the worst testing library ever, but we need to start somewhere
 import "chalk" as chalk
-import stringify from "stringify-any"
+import "stringify-any" as stringify
 import { deepEqual } from 'fast-equals'
 let equal = deepEqual
 
 # Have some kind of test runner class, not a global
 let level = 0
 
-export def log-indented(msg)
+def log-indented(msg)
   let indent = "".padStart(level*2, )
   console.log(indent+msg)
 
