@@ -3,6 +3,8 @@
 let path = require "path"
 let fs = require "fs"
 
+import { defined-tests } from "../src/index"
+
 class TestRunner
   def run
     # Ignore args for now
@@ -13,5 +15,8 @@ class TestRunner
     # Right now it just runs them all instantly, which is quite silly, but we need to start somewhere
     for path in spec-files
       require("{process.cwd}/spec/{path.slice(0,-5)}")
+
+    defined-tests.for-each do |test-group|
+      test-group.run
 
 TestRunner.new.run
