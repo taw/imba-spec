@@ -1,6 +1,6 @@
 # This is the worst testing library ever, but we need to start somewhere
 import "chalk" as chalk
-import stringify from "./stringify"
+import stringify from "stringify-any"
 import { deepEqual } from 'fast-equals'
 let equal = deepEqual
 
