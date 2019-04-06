@@ -25,11 +25,23 @@ class TestCase
     @parent = parent
     @block = block
 
-  def assert-equal(a, b)
+  def expect-equal(a, b)
     if equal(a, b)
       log-indented chalk.green("OK")
     else
       log-indented chalk.red("FAIL: {stringify(a)} != {stringify(b)}")
+
+  def expect-includes(ary, item)
+    if ary.includes(item)
+      log-indented chalk.green("OK")
+    else
+      log-indented chalk.red("FAIL: {stringify(ary)} expected to include {stringify(item)}")
+
+  def expect-excludes(ary, item)
+    if !ary.includes(item)
+      log-indented chalk.green("OK")
+    else
+      log-indented chalk.red("FAIL: {stringify(ary)} expected to exclude {stringify(item)}")
 
   def create-context
     let context-blocks = {}
@@ -129,8 +141,22 @@ export def it(msg, block)
   else
     throw Error.new("Cannot call it outside describe block")
 
-export def assert-equal(a, b)
+export let expect = {}
+
+expect:equal = do |a, b|
   if current-test-case
-    current-test-case.assert-equal(a, b)
+    current-test-case.expect-equal(a, b)
   else
-    throw Error.new("Cannot call assert-equal outside it block")
+    throw Error.new("Cannot call expect.equal outside it block")
+
+expect:includes = do |ary, item|
+  if current-test-case
+    current-test-case.expect-includes(ary, item)
+  else
+    throw Error.new("Cannot call expect.includes outside it block")
+
+expect:excludes = do |ary, item|
+  if current-test-case
+    current-test-case.expect-excludes(ary, item)
+  else
+    throw Error.new("Cannot call expect.excludes outside it block")
