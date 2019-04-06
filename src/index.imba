@@ -69,7 +69,8 @@ class TestCase
       current-test-case = this
       @block(context)
     catch e
-      log-indented chalk.red("ERROR: {e}")
+      for line in e:stack.split("\n")
+        log-indented chalk.red(line)
     level -= 1
     current-test-case = null
 
