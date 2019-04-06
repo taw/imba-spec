@@ -16,7 +16,8 @@ let def extract-location(stack-trace)
 
 let def log-indented(msg)
   let indent = "".pad-start(level*2)
-  console.log indent + msg
+  for line in msg.split("\n")
+    console.log indent + line
 
 class TestCase
   def initialize(msg, loc, parent, block)
@@ -81,8 +82,7 @@ class TestCase
       current-test-case = this
       @block(context)
     catch e
-      for line in e:stack.split("\n")
-        log-indented chalk.red(line)
+      log-indented chalk.red(e:stack)
     level -= 1
     current-test-case = null
 

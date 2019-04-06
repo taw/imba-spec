@@ -1,6 +1,6 @@
 {
   "name": "imba-spec",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Test framework for Imba",
   "main": "./src/index",
   "bin": {

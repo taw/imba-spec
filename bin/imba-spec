@@ -6,15 +6,50 @@ let fs = require "fs"
 import { defined-tests } from "../src/index"
 
 class TestRunner
-  def run
-    # Ignore args for now
-    let args = process:argv
-    let spec-files = fs.readdirSync("spec").filter do |path|
-      path.ends-with(".imba")
+  # Probably should use a proper parser
+  def parse-args
+    let examples = []
+    let files = []
+    # First two are: "imba", "imba-spec.imba"
+    let args = process:argv.slice(2)
+    while args:length != 0
+      let arg = args.shift
+      # Between npm and imba, all the dash-arguments get hijacked :-/
+      if arg === "help"
+        print-help
+        process.exit(0)
+      if arg === "example"
+        examples.push args.shift
+      else
+        files.push arg
+    {
+      examples: examples,
+      files: files,
+    }
 
-    # Right now it just runs them all instantly, which is quite silly, but we need to start somewhere
-    for path in spec-files
-      require("{process.cwd}/spec/{path.slice(0,-5)}")
+  def print-help
+    console.log "Options:"
+    console.log "  help              Display this message"
+    # Thid doesn't do anything yet
+    # console.log "  example STRING    Only run examples including string in their nested description"
+    # console.log "                    (can be repeated multiple times)"
+    console.log "  file.imba         Only run specified files"
+    console.log "                    (can be repeated multiple times)"
+    console.log "                    (if no files are specified spec/*.imba is run)"
+
+  def run
+    let opts = parse-args
+    if opts:files:length > 0
+      for file in opts:files
+        if file[0] !== "/"
+          file = path.join(process.cwd, file)
+        # Fails if it doesn't end in .imba
+        require(file.slice(0,-5))
+    else
+      let spec-files = fs.readdirSync("spec").filter do |file|
+        file.ends-with(".imba")
+      for file in spec-files
+        require("{process.cwd}/spec/{file.slice(0,-5)}")
 
     defined-tests.for-each do |test-group|
       test-group.run
