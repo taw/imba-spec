@@ -30,6 +30,6 @@
     "stringify-any": "0.0.1"
   },
   "devDependencies": {
-    "imba": "^1.4.2"
+    "imba": "^1.4.8"
   }
 }
